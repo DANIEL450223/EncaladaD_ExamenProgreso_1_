@@ -39,7 +39,6 @@ namespace EncaladaD_ExamenProgreso_1.Migrations
                         .HasColumnType("nvarchar(100)");
 
                     b.Property<int>("numeroTelefono")
-                        .HasMaxLength(10)
                         .HasColumnType("int");
 
                     b.Property<decimal>("pagosRealizado")
@@ -61,6 +60,10 @@ namespace EncaladaD_ExamenProgreso_1.Migrations
                     b.Property<DateTime>("FechaInicio")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("clienteId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(15)");
+
                     b.Property<string>("nombre")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -70,6 +73,8 @@ namespace EncaladaD_ExamenProgreso_1.Migrations
 
                     b.HasKey("recompensasId");
 
+                    b.HasIndex("clienteId");
+
                     b.ToTable("PlanRecompensasCliente");
                 });
 
@@ -77,21 +82,19 @@ namespace EncaladaD_ExamenProgreso_1.Migrations
                 {
                     b.Property<int>("reservaId")
                         .ValueGeneratedOnAdd()
-                        .HasMaxLength(15)
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("reservaId"));
 
                     b.Property<string>("clienteId")
                         .IsRequired()
-                        .HasMaxLength(15)
                         .HasColumnType("nvarchar(15)");
 
-                    b.Property<int>("fechaEntrada")
-                        .HasColumnType("int");
+                    b.Property<DateTime>("fechaEntrada")
+                        .HasColumnType("datetime2");
 
-                    b.Property<int>("fechaSalida")
-                        .HasColumnType("int");
+                    b.Property<DateTime>("fechaSalida")
+                        .HasColumnType("datetime2");
 
                     b.Property<decimal>("valorPagar")
                         .HasColumnType("decimal(18,2)");
@@ -101,6 +104,17 @@ namespace EncaladaD_ExamenProgreso_1.Migrations
                     b.HasIndex("clienteId");
 
                     b.ToTable("Reserva");
+                });
+
+            modelBuilder.Entity("EncaladaD_ExamenProgreso_1.Models.Recompensas", b =>
+                {
+                    b.HasOne("EncaladaD_ExamenProgreso_1.Models.Cliente", "Cliente")
+                        .WithMany()
+                        .HasForeignKey("clienteId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Cliente");
                 });
 
             modelBuilder.Entity("EncaladaD_ExamenProgreso_1.Models.Reserva", b =>

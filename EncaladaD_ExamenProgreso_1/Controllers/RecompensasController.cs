@@ -9,22 +9,23 @@ using EncaladaD_ExamenProgreso_1.Models;
 
 namespace EncaladaD_ExamenProgreso_1.Controllers
 {
-    public class Recompensas : Controller
+    public class RecompensasController : Controller
     {
         private readonly DBSqlSERVER_Demo01 _context;
 
-        public Recompensas(DBSqlSERVER_Demo01 context)
+        public RecompensasController(DBSqlSERVER_Demo01 context)
         {
             _context = context;
         }
 
-        // GET: PlanRecompensasClientes
+        // GET: Recompensas
         public async Task<IActionResult> Index()
         {
-            return View(await _context.PlanRecompensasCliente.ToListAsync());
+            var dBSqlSERVER_Demo01 = _context.PlanRecompensasCliente.Include(r => r.Cliente);
+            return View(await dBSqlSERVER_Demo01.ToListAsync());
         }
 
-        // GET: PlanRecompensasClientes/Details/5
+        // GET: Recompensas/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -32,39 +33,42 @@ namespace EncaladaD_ExamenProgreso_1.Controllers
                 return NotFound();
             }
 
-            var planRecompensasCliente = await _context.PlanRecompensasCliente
+            var recompensas = await _context.PlanRecompensasCliente
+                .Include(r => r.Cliente)
                 .FirstOrDefaultAsync(m => m.recompensasId == id);
-            if (planRecompensasCliente == null)
+            if (recompensas == null)
             {
                 return NotFound();
             }
 
-            return View(planRecompensasCliente);
+            return View(recompensas);
         }
 
-        // GET: PlanRecompensasClientes/Create
+        // GET: Recompensas/Create
         public IActionResult Create()
         {
+            ViewData["clienteId"] = new SelectList(_context.Cliente, "clienteId", "clienteId");
             return View();
         }
 
-        // POST: PlanRecompensasClientes/Create
+        // POST: Recompensas/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("recompensasId,nombre,FechaInicio,puntosAcumulados")] Models.Recompensas planRecompensasCliente)
+        public async Task<IActionResult> Create([Bind("recompensasId,nombre,FechaInicio,puntosAcumulados,clienteId")] Recompensas recompensas)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(planRecompensasCliente);
+                _context.Add(recompensas);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(planRecompensasCliente);
+            ViewData["clienteId"] = new SelectList(_context.Cliente, "clienteId", "clienteId", recompensas.clienteId);
+            return View(recompensas);
         }
 
-        // GET: PlanRecompensasClientes/Edit/5
+        // GET: Recompensas/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -72,22 +76,23 @@ namespace EncaladaD_ExamenProgreso_1.Controllers
                 return NotFound();
             }
 
-            var planRecompensasCliente = await _context.PlanRecompensasCliente.FindAsync(id);
-            if (planRecompensasCliente == null)
+            var recompensas = await _context.PlanRecompensasCliente.FindAsync(id);
+            if (recompensas == null)
             {
                 return NotFound();
             }
-            return View(planRecompensasCliente);
+            ViewData["clienteId"] = new SelectList(_context.Cliente, "clienteId", "clienteId", recompensas.clienteId);
+            return View(recompensas);
         }
 
-        // POST: PlanRecompensasClientes/Edit/5
+        // POST: Recompensas/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("recompensasId,nombre,FechaInicio,puntosAcumulados")] Models.Recompensas planRecompensasCliente)
+        public async Task<IActionResult> Edit(int id, [Bind("recompensasId,nombre,FechaInicio,puntosAcumulados,clienteId")] Recompensas recompensas)
         {
-            if (id != planRecompensasCliente.recompensasId)
+            if (id != recompensas.recompensasId)
             {
                 return NotFound();
             }
@@ -96,12 +101,12 @@ namespace EncaladaD_ExamenProgreso_1.Controllers
             {
                 try
                 {
-                    _context.Update(planRecompensasCliente);
+                    _context.Update(recompensas);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!PlanRecompensasClienteExists(planRecompensasCliente.recompensasId))
+                    if (!RecompensasExists(recompensas.recompensasId))
                     {
                         return NotFound();
                     }
@@ -112,10 +117,11 @@ namespace EncaladaD_ExamenProgreso_1.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(planRecompensasCliente);
+            ViewData["clienteId"] = new SelectList(_context.Cliente, "clienteId", "clienteId", recompensas.clienteId);
+            return View(recompensas);
         }
 
-        // GET: PlanRecompensasClientes/Delete/5
+        // GET: Recompensas/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -123,32 +129,33 @@ namespace EncaladaD_ExamenProgreso_1.Controllers
                 return NotFound();
             }
 
-            var planRecompensasCliente = await _context.PlanRecompensasCliente
+            var recompensas = await _context.PlanRecompensasCliente
+                .Include(r => r.Cliente)
                 .FirstOrDefaultAsync(m => m.recompensasId == id);
-            if (planRecompensasCliente == null)
+            if (recompensas == null)
             {
                 return NotFound();
             }
 
-            return View(planRecompensasCliente);
+            return View(recompensas);
         }
 
-        // POST: PlanRecompensasClientes/Delete/5
+        // POST: Recompensas/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var planRecompensasCliente = await _context.PlanRecompensasCliente.FindAsync(id);
-            if (planRecompensasCliente != null)
+            var recompensas = await _context.PlanRecompensasCliente.FindAsync(id);
+            if (recompensas != null)
             {
-                _context.PlanRecompensasCliente.Remove(planRecompensasCliente);
+                _context.PlanRecompensasCliente.Remove(recompensas);
             }
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool PlanRecompensasClienteExists(int id)
+        private bool RecompensasExists(int id)
         {
             return _context.PlanRecompensasCliente.Any(e => e.recompensasId == id);
         }

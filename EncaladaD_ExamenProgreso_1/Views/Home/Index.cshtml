@@ -3,6 +3,31 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="display-4">Bienvenido</h1>
+
+    <!-- Imagen del meme -->
+    <img src="~/images/meme.jpg" alt="Meme Favorito" class="meme-img" />
+
+    <!-- Campo de texto y botón -->
+    <div class="mt-4">
+        <input type="text" id="campoTexto" class="form-control w-50 mx-auto mb-3" placeholder="Escribe algo aquí..." />
+        <button class="btn btn-outline-info btn-lg" onclick="mostrarAlerta()">Mostrar Alerta</button>
+    </div>
 </div>
+
+@section Scripts {x
+    <script>
+        function mostrarAlerta() {
+            var valorTexto = document.getElementById("campoTexto").value;
+            alert("Mi nombre es Daniel, mi hobbie es Jugar Videojuegos y soy del equipo: " + valorTexto);
+        }
+    </script>
+}
+
+<style>
+    .meme-img {
+        width: 400px;
+        height: 500px;
+        object-fit: cover;
+    }
+</style>

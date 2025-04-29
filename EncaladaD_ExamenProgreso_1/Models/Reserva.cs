@@ -6,27 +6,28 @@ namespace EncaladaD_ExamenProgreso_1.Models
     public class Reserva
     {
         [Key]
-        [MaxLength(15)]
+        [Display(Name = "Id Reserva")]
         public int reservaId { get; set; }
 
 
-        [Required]
         [DataType(DataType.Date)]
-        public DataType fechaEntrada { get; set; }
+        [Display(Name = "Fecha de Entrada")]
+        public DateTime fechaEntrada { get; set; }
 
 
-        [Required]
         [DataType(DataType.Date)]
-        public DataType fechaSalida { get; set; }
+        [Display(Name = "Fecha de Salida")]
+        public DateTime fechaSalida { get; set; }
 
 
-        [Required]
+
         [Range(0, 10000)]
+        [Display(Name = "Valor a pagar")]
         public decimal valorPagar { get; set; }
 
 
         [Required]
-        [MaxLength(15)]
+        [Display(Name = "Id del Cliente")]
         public string clienteId { get; set; }
 
         [ForeignKey("clienteId")]

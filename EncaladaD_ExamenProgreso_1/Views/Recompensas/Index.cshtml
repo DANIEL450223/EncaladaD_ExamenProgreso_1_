@@ -1,13 +1,13 @@
 ﻿@model IEnumerable<EncaladaD_ExamenProgreso_1.Models.Recompensas>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Recompensas";
 }
 
-<h1>Index</h1>
+<h1>Recompensas</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Agregar</a>
 </p>
 <table class="table">
     <thead>
@@ -21,27 +21,42 @@
             <th>
                 @Html.DisplayNameFor(model => model.puntosAcumulados)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Cliente)
+            </th>
+            <th>
+                Tipo de Recompensa
+            </th> <!-- NUEVA COLUMNA -->
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.nombre)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FechaInicio)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.puntosAcumulados)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.recompensasId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.recompensasId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.recompensasId">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FechaInicio)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.puntosAcumulados)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Cliente.clienteId)
+                </td>
+                <td>
+                    <span class="badge @(item.TipoRecompensa == "GOLD" ? "bg-warning text-dark" : "bg-secondary")">
+                        @item.TipoRecompensa
+                    </span>
+                </td> <!-- NUEVO VALOR MOSTRADO -->
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.recompensasId">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.recompensasId">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.recompensasId">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
