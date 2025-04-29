@@ -14,7 +14,6 @@ namespace EncaladaD_ExamenProgreso_1.Models
         public string nombreCliente { get; set; }
 
 
-        [MaxLength(10)]
         public int numeroTelefono { get; set; }
 
 
