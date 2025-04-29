@@ -6,6 +6,7 @@ namespace EncaladaD_ExamenProgreso_1.Models
     public class Reserva
     {
         [Key]
+        [MaxLength(15)]
         public int reservaId { get; set; }
 
 
@@ -20,9 +21,14 @@ namespace EncaladaD_ExamenProgreso_1.Models
 
 
         [Required]
+        [Range(0, 10000)]
         public decimal valorPagar { get; set; }
 
+
+        [Required]
+        [MaxLength(15)]
         public string clienteId { get; set; }
+
         [ForeignKey("clienteId")]
         public Cliente? Cliente { get; set; }
     }

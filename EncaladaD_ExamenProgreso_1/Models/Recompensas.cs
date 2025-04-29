@@ -2,7 +2,7 @@
 
 namespace EncaladaD_ExamenProgreso_1.Models
 {
-    public class PlanRecompensasCliente
+    public class Recompensas
     {
         [Key]
         public int recompensasId { get; set; }

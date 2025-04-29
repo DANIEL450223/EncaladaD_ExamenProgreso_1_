@@ -1,0 +1,48 @@
+﻿@model EncaladaD_ExamenProgreso_1.Models.Cliente
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Cliente</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.nombreCliente)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.nombreCliente)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.numeroTelefono)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.numeroTelefono)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.esMiembro)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.esMiembro)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.fechaRegistro)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.fechaRegistro)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.pagosRealizado)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.pagosRealizado)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.clienteId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

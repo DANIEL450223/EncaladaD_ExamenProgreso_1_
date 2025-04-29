@@ -27,6 +27,7 @@ namespace EncaladaD_ExamenProgreso_1.Models
 
 
         [Required]
+        [Range(0, 10000)]
         public decimal pagosRealizado { get; set; }
 
 
